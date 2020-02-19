@@ -6,7 +6,7 @@ import { returnErrors } from './errorActions';
 export const getItems = () => dispatch => {
 	dispatch(setItemsLoading());
 	axios
-		.get('http://localhost:5000/api/items')
+		.get('/api/items')
 		.then(res =>
 			dispatch({
 				type: GET_ITEMS,
@@ -19,7 +19,7 @@ export const getItems = () => dispatch => {
 };
 
 export const addItem = item => dispatch => {
-	axios.post('http://localhost:5000/api/items', item).then(res =>
+	axios.post('/api/items', item).then(res =>
 		dispatch({
 			type: ADD_ITEM,
 			payload: res.data
@@ -28,7 +28,7 @@ export const addItem = item => dispatch => {
 };
 
 export const deleteItem = id => dispatch => {
-	axios.delete(`http://localhost:5000/api/items/${id}`).then(res =>
+	axios.delete(`/api/items/${id}`).then(res =>
 		dispatch({
 			type: DELETE_ITEM,
 			payload: id
