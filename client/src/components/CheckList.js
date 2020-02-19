@@ -10,32 +10,31 @@ class CheckList extends Component {
 		this.props.getItems();
 	}
 
-	onDeleteClick(id) {
+	onDeleteClick = id => {
 		this.props.deleteItem(id);
-	}
+	};
 
 	render() {
 		const { items } = this.props.item;
-		const { isDone } = this.props;
 		return (
 			<Container>
 				<ListGroup>
 					<TransitionGroup className='check-list'>
-						{items.map(({ id, name }) => (
-							<CSSTransition key={id} timeout={500} classNames='fade'>
+						{items.map(({ _id, name }) => (
+							<CSSTransition key={_id} timeout={500} classNames='fade'>
 								<ListGroupItem action>
 									{name}
 									<Button
 										className='remove-btn'
 										style={{
-											marginLeft: '0.5rem',
-											float: 'right'
+											float: 'right',
+											borderRadius: '100%'
 										}}
-										color='btn btn-outline-danger'
+										color='btn btn-outline-secondary'
 										size='sm'
-										onClick={this.onDeleteClick.bind(this, id)}
+										onClick={this.onDeleteClick.bind(this, _id)}
 									>
-										delete
+										&times;
 									</Button>
 								</ListGroupItem>
 							</CSSTransition>
@@ -50,7 +49,7 @@ class CheckList extends Component {
 CheckList.propTypes = {
 	getItems: PropTypes.func.isRequired,
 	item: PropTypes.object.isRequired,
-	isDone: PropTypes.bool.isRequired
+	toggleItem: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
