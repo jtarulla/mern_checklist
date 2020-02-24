@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
@@ -10,13 +9,14 @@ const app = express();
 app.use(cors());
 
 // Bodyparser middleware
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Connect to Mongo
 mongoose
 	.connect(process.env.MONGO_URI, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
+		useCreateIndex: true,
 		useFindAndModify: false
 	})
 	.then(console.log('MongoDB Connected...'))
@@ -24,6 +24,8 @@ mongoose
 
 // Use Routes
 app.use('/api/items', require('./routes/api/items'));
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/auth', require('./routes/api/auth'));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
